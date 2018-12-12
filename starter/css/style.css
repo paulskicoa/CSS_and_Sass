@@ -43,4 +43,48 @@ body {
   The grid is the element this is in (header here). x increases to right
   and y increases down, so 0 0 is top left corner of element*/
   clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+  position: relative; /* since we have a child positioned absolutely */
+}
+
+.logo-box {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+}
+
+.logo {
+  height: 35px;
+}
+
+.text-box {
+  /* center within header */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  /* shift the left and top by -50% relative to the
+  width of the text box itself. this will make it so the text box is
+  centered */
+  transform: translate(-50%, -50%);
+}
+
+.heading-primary {
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.heading-primary-main {
+  /* Spans are inline elements by default, but we want
+  our main and sub to be block so they get their own line
+  and take up full width available to them */
+  display: block;
+  font-size: 60px;
+  font-weight: 400;
+  letter-spacing: 35px;
+}
+
+.heading-primary-sub {
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 17.4px;
 }
