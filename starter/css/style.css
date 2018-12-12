@@ -65,6 +65,8 @@ body {
   width of the text box itself. this will make it so the text box is
   centered */
   transform: translate(-50%, -50%);
+  /* center inline/inline-block child elements (which are treated as text) */
+  text-align: center;
 }
 
 .heading-primary {
@@ -74,6 +76,7 @@ body {
   /* fix the shaking up/down in animations.
   no one knows why shaking happens or why this fixes it */
   backface-visibility: hidden;
+  margin-bottom: 60px;
 }
 
 .heading-primary-main {
@@ -135,4 +138,39 @@ body {
     opacity: 1;
     transform: translate(0);
   }
+}
+
+/* make button look same before and after it's clicked */
+.btn:link,
+.btn:visited {
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 100px;
+
+  /* needs to be on initial state, link, to animate.
+  now property changes, like the ones below using transform,
+  will happen smoothly vs. abruptly */
+  transition: all 0.2s;
+}
+
+.btn:hover {
+  /* translate arg is relative to btn link state */
+  transform: translateY(-3px);
+
+  /* x offset, y offset, blur, color. higher blur 
+  makes shadowed element look farther away */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* while btn is pressed down */
+.btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn-white {
+  background-color: #fff;
+  color: #777;
+  padding: 15px 40px;
 }
