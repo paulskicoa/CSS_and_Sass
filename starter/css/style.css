@@ -70,6 +70,10 @@ body {
 .heading-primary {
   color: #fff;
   text-transform: uppercase;
+
+  /* fix the shaking up/down in animations.
+  no one knows why shaking happens or why this fixes it */
+  backface-visibility: hidden;
 }
 
 .heading-primary-main {
@@ -80,6 +84,14 @@ body {
   font-size: 60px;
   font-weight: 400;
   letter-spacing: 35px;
+
+  animation-name: moveInFromLeft;
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
+
+  /* other anim props we could use:
+  animation-iteration-count: 3;
+  animation-delay: 3s; */
 }
 
 .heading-primary-sub {
@@ -87,4 +99,40 @@ body {
   font-size: 20px;
   font-weight: 700;
   letter-spacing: 17.4px;
+
+  /* shorthand for name, duration, timing */
+  animation: moveInFromRight 1s ease-out;
+}
+
+/* browsers are optimized to animate transform and opacity */
+@keyframes moveInFromLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+
+  80% {
+    transform: translateX(10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+@keyframes moveInFromRight {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+
+  80% {
+    transform: translateX(-10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
 }
