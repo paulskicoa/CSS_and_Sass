@@ -1,0 +1,430 @@
+CSS selectors:
+* is universal. It selects all elements on the page.
+
+Box sizing border-box means the padding and margins are
+not added to total width and height specified.
+
+Pseudoclasses are special states of a selector. For instance,
+for .btn: link, link is a special state of button selector.
+Others are hover, checked, etc etc.
+
+Pseudoelements allow us to style certain parts of elements.
+'After' adds a virtual element after the element that we're selecting,
+and then we can style that virtual element. It's treated as a child
+of the element.
+
+Three pillars of writing good HTML and CSS:
+1. Responsive design
+A website should work well across all screen sizes and devices.
+Fluid layouts, media queries, responsive images, correct units, 
+desktop-first vs mobile-first
+
+2. Maintainable and scalable
+Clean, easy-to-understand, supports growth, reusable code:
+how to organize files, name classes, and structure HTML
+
+3. Web performance
+Faster, smaller:
+Fewer HTTP requests, less code, compressed code, Use a CSS preprocessor
+(e.g. Sass), fewer images, compressed images
+
+CSS behind the scenes
+What happens to CSS when loading a webpage?
+Load HTML -> Parse HTML -> Build DOM
+
+While DOM is being built, CSS files are loaded as they are found:
+Parse HTML -> Load CSS -> Parse CSS -> Store CSS in CSS Object Model (CSSOM)
+
+Two main steps in parsing CSS:
+1. Resolve conflicting CSS declarations (cascade)
+2. Process final CSS values (e.g. converting margin defined as % to px)
+
+The DOM and CSSOM together form the Render tree 
+Then we have everything needed to render the page:
+Render tree -> website rendering the visual formatting model
+
+To actually render the page, browser uses visual formatting model, an algorithm.
+Finally, the website is rendered (painted) to the screen
+
+.my-class {
+  color: blue;
+}
+
+A CSS rule consists of a selector and a declaration block. In the above,
+the selector is '.my-class' and the block is {  } which contains declarations
+like color:blue;
+
+Each declaration consists of a CSS property and its declared value.
+For the color:blue declaration, color is the property and blue is the value.
+
+The C in CSS is cascade, used to resolve conflicting declarations.
+The Cascade is the process of combining different stylesheets and resolving
+conflicts between different CSS rules and definitions when more than one 
+rule applies to a certain element.
+
+Stylesheets can come from different places. Author declarations are inline styles, 
+external and internal (as a style tag in the head section) stylesheets.
+Within author declarations, the priority is
+1. Inline style
+2. External and internal style stylesheets
+
+Another source can be user declarations, which is CSS coming from the user,
+like when they change default font size in browser.
+Finally, there are browser (user agent) declarations which are default CSS declarations
+(like the blue color of an unvisited link and purple after visiting) 
+
+To resolve conflicts, it uses a combination of these:
+Importance (Weight) > Specificity > Source Order
+
+Importance is given to declarations based on where they're declared.
+1. User !important declarations
+2. Author !important declarations
+3. Author declarations
+4. User declarations
+5. Default browser declarations
+
+Conflicting declarations:
+.button {
+  background-color: blue !important; #2
+}
+
+#nav .pull-right .button {
+  background-color: green; #3
+}
+
+Here, the one with !important wins. If there are conflicting rules
+with same importance (no !important), the next tiebreaker is specificity.
+
+Calculates and compares specificity of selectors.
+1. Inline styles
+2. IDs
+3. Class, pseudoclass, attribute selectors
+4. Element, pseudoelement selectors
+
+Example:
+#1
+.button {
+  background-color: blue;
+}
+
+#2
+nav#nav div.pull-right .button {
+  background-color: green;
+}
+
+#3
+a {
+  background-color: purple;
+}
+
+#4
+#nav a.button:hover {
+  background-color: yellow;
+}
+
+These all have same importance since they're all Author declarations,
+and none use !important. But they have different specificities.
+
+Specificity of a selector is calculated as a 4-tuple:
+(x1, x2, x3, x4)
+where x1 is for inline, x2 is for IDs, x3 is for classes, x4 is for elements
+
+for #1, this would be (0, 0, 1, 0) since it only has one class selector, .button,
+and nothing else.
+
+for #2, this would be (0, 1, 2, 2):
+1 for #nav id, 2 for .button and .pull-right classes, 2 for nav and div elements
+
+for #3, this is (0, 0, 0, 1)
+
+for #4, this is (0, 1, 2, 1)
+1 for #nav id, 2 for button class and hover pseudoclass, 1 for a element
+
+Look at numbers starting left to right. Highest number wins. If there's a tie,
+move to the next number. Repeat until there's a winner, or if all 4 numbers are the same
+for multiple selectors, there's still a tie, and source order will be the tiebreaker.
+
+In this case, selector #2 wins because it has the tiebreak of 2 in the last number to beat
+out the other selectors.
+
+If two or more elements have the same specificity (which implies to have the same importance,
+otherwise one would have won out already), then it goes to source order to break the tie.
+
+The last declaration in the code will override all other declarations and will be applied
+in this case.
+
+You should only use !important as a last resort. It's better to use
+correct specificities because it gives you more maintainable code.
+Remember that inline styles (those applied directly in the HTML, like
+<p style="color:#fff"></p>) always have priority over styles in external
+stylesheets.
+
+The universal selector, *, has no specificity value -- (0, 0, 0, 0)
+
+Rely more on specificity than on the order of selectors, that way if you rearrange
+your CSS sometime, it won't mess up which styles get applied to what
+
+DO rely on order when using 3rd party stylesheets -- always put your author stylesheet last.
+If there are conflicts, and it comes down to order to tiebreak, yours will win.
+
+************** How CSS values are processed
+1. Declared values (author declarations) are examined.
+In case of conflict, the rules above are applied, which 
+results in
+
+2. Cascaded value (after the cascade)
+
+3. Specified value (default value of a certain CSS property).
+Only applies if no cascaded value. Every CSS property will have a value,
+whether declared by us or not.
+
+4. Computed value (values with relative units (e.g. 50%) are converted to absolute (px),
+because this is required for display, and so that they can be inherited)
+
+5. Used value, the final calculations based on layout,
+e.g. 50% of 280px is 140px. Only happens in render phase of page.
+
+6. Actual value. The used value is adjusted to account for 
+browser and device restrictions. e.g. 184.8px may be rounded to 185px.
+
+Each CSS property has an initial value, which is used if there's
+no cascaded value. If we don't declare a value, and neither broswer nor
+user declare one either, the initial value is used.
+As an example, this would be 0px for padding. This is the specified 
+value, #3 above.
+
+Once there's a value using absolute units like 16px, that same 
+value will just be copied down through steps 3-6, and would only change
+in step 6 if needed.
+
+Some properties are inherited. That means a child can inherit the computed 
+value (step 4 above) from their parent for these properties.
+
+********** How units are converted from relative to absolute (px)
+html, body {
+  font-size: 16px;
+  width: 80vw;
+} 
+
+header {
+  font-size: 150%;
+  padding: 2em;
+  margin-bottom: 10rem;
+  height: 90vh;
+  width: 1000px;
+}
+
+.header-child {
+  font-size: 3em;
+  padding: 10%;
+}
+
+% (fonts):
+x% * parent's computed font-size
+for an el like the header, 150% font-size is converted to px by
+multiplying by parent's computed font-size.
+150% * 16px = 24px
+
+% (lengths):
+x% * parent's computed width
+padding 10% becomes
+10% * 1000px = 100px
+
+Font-based relative units:
+ems use parent of current element as reference, While
+rems use the root element, <html>, as a reference 
+
+em (font):
+x * parent computed font-size
+3em (from .header-child) * 24px (from header) = 72px
+
+em (length):
+x * current element computed font-size
+2em (from header) * 24px (also from header) = 48px
+
+rem:
+x * root computed font-size
+10rem * 16px = 160px
+
+Viewport based relative units:
+vh:
+1vh is 1% of viewport height
+x * 1% of viewport height
+90vh = 90% of current viewport height (which browser will then translate to px in step 4)
+
+vw:
+1vw is 1% of viewport width
+x * 1% of viewport width
+80vh = 80% of current viewport width
+
+********** Inheritance
+A way of propagating property values from a parent to their children
+.parent {
+  font-size: 20px;
+  line-height: 150%;
+}
+
+.child {
+  font-size: 25px;
+}
+
+Line-height of child?
+Every CSS property must have a value.
+First, is there a cascaded value? If so, that's the value that's used.
+There is no cascaded value for line-height of child, because one was
+specified by us, the browser, or a user.
+If not, can the property be inherited? If so, the specified value
+will be the computed value of the parent element. This is inheritance!
+If not, then specified value becomes the initial value
+(specific to each property)
+
+In the above case, the line-height of child has no cascaded value,
+but can be inherited from its parent element. however, it is not
+150% that is inherited, but the calculated value (in px) using that,
+so it would be 150% * 20px = 30px
+
+Properties related to text are inherited: font-family, font-size, color, etc
+Other properties like margin or padding aren't inherited
+
+We can use the inherit keyword to force inheritance on a certain property
+The initial keyword resets a property to its initial value
+
+The visual formatting model is an algo that calculates boxes and determines
+the layout of them, for each element in the render tree, to determine
+the final page layout
+Takes into account:
+dimensions of boxes (box model)
+box type (inline, block, inline-block)
+positioning scheme (floats, abs/rel positioning)
+stacking contexts
+other els in render tree
+viewport size, dimensions of images, etc
+
+****** Box model:
+Content: text, images, etc
+Padding: transparent area around the content, inside the box
+Border: boundary between outside of padding and inside of margin
+Margin: space between boxes. Whitespace outside the box
+Fill area: gets filled with bg color or bg image. Everything but margin.
+
+Content-box:
+Total width = right border + left padding + specified width + left padding + left border
+Total height = top border + top padding + specified height + bottom padding + bottom border
+
+This is the box-sizing by default on some elements, but it means the values we give for height and width don't take borders and padding into account.
+If we want to specify a width and height that will include those, we use border-box instead.
+
+total width = Specified width = right border + left padding + content width + left padding + left border
+total height = Specified height = top border + top padding + content height + bottom padding + bottom border
+
+Border-box also means the padding and borders we specify will reduce the width
+of the content area, instead of being added on to the content area as in content-box.
+
+Border-box is considered more logical and easier to work with, so it is often
+applied to all elements with this CSS declaration:
+* {
+  box-sizing: border-box;
+}
+
+Box types:
+Block-level boxes are:
+Elements formatted visually as blocks
+100% of parent's width
+Vertically, one after another (line breaks before and after)
+And the box model applies as shown above
+display: block
+display: flex
+display: list-item
+display: table
+all produce block-level boxes.
+
+All els have default display property. Those like
+divs or paragraphs that are usually formatted visually
+as blocks are display: block by default
+
+Inline boxes:
+content is distributed in lines
+occupies only content's space
+no line breaks
+no heights and widths
+paddings and margins can only be left and right
+sit inside block level parent
+spans have display: inline by default
+
+Inline-block boxes:
+A mix of block and inline
+occupies only content's space
+no line breaks
+box model applies same as for block 
+
+positioning schemes:
+normal flow:
+default positioning scheme
+not floated
+not absolutely positioned
+els laid out according to source order
+els positioned relatively are still in normal flow
+
+float:
+el is removed from normal flow and shifted to left or right as far as possible,
+until it touches the edge of its containing box or another floated el
+text and inline els wrap around floated el
+container will not adjust its height to the element - usual solution is clearfix
+can float left or right
+
+absolute:
+el removed from normal flow
+no impact on surrounding content or els - can overlap them
+top, bottom, left, right used to offset el from its 
+closest relatively positioned containing el
+position: absolute or position: fixed
+
+Stacking contexts:
+determine in which order els are rendered on page. can be
+created by css properties
+most widely known that creates stacking context is z-index. higher z goes on top
+layers on bottom of stack are painted first
+z-index can be used with position rel or abs
+opacity value other than 1, transform, filter, and other properties
+also create new stacking contexts
+
+Think Build Architect mindset
+Think about the layout of your webpage or web app before writing code.
+Build your layout in HTML and CSS with a consistent structure for naming classes.
+Architect -- create a logical architecture for your CSS with files and folders
+
+Think:
+Component-driven design uses:
+modular building blocks that make up interfaces
+held together by the layout of the page
+re-usable across a project and between different projects
+independent, allowing us to use them anywhere on page (shouldn't depend on parent) 
+
+Build (with meaningful class names):
+BEM - Block Element Modifier
+Low-specificity BEM selectors:
+.block {}
+.block__element{}
+.block__element--modifier{}
+
+A Block is a standalone component that's meaningful on its own.
+examples are header, container, menu, checkbox, input
+An Element is part of a block that has no meaning on its own.
+this could be like a list item or a checkbox caption, or header title.
+A Modifier is a different version of a block or element -- disabled, highlighted, checked, etc.
+modifiers change appearance or behavior.
+
+Architect:
+7-1 Pattern:
+7 different folders for partial Sass (or other CSS pre-proc) files and 1 main Sass file
+to import all other files into a compiled CSS stylesheet
+The 7 folders are:
+base/
+components/
+layout/
+pages/
+themes/
+abstracts/ -- doesn't output any CSS -- variables or mixins
+vendors/ -- all 3rd party CSS
+
+Don't always need to use all of them.

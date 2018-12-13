@@ -1,3 +1,10 @@
+$color-primary: #55c57a;
+$color-primary-light: #7ed56f;
+$color-primary-dark: #28b485;
+
+$color-grey-dark: #777;
+$color-white: #fff;
+
 /* By default, browsers apply some margin
 or padding. We set these to 0 to ensure the
 same starting point for all browsers.
@@ -7,44 +14,53 @@ This is called a global reset. */
 *::before {
   margin: 0;
   padding: 0;
-  box-sizing: inherit; }
+  box-sizing: inherit; 
+}
 
 /* Set root font size to 10px so rem is just x10 */
 html {
-  font-size: 62.5%; }
+  font-size: 62.5%;
+}
 
 /* Properties related to font are usually inherited,
 so we set these in the body */
 body {
   font-family: "Lato", sans-serif;
-  font-weight: 400;
-  /* normal */
+  font-weight: 400; /* normal */
   line-height: 1.7;
-  color: #777;
+  color: $color-grey-dark;
   padding: 3rem;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+}
 
 .header {
   height: 95vh;
   /* First bg image goes on top of second */
-  background-image: linear-gradient(to right bottom, rgba(126, 213, 111, 0.8), rgba(40, 180, 133, 0.8)), url(../img/hero.jpg);
+  background-image: linear-gradient(
+    to right bottom,
+  rgba($color-primary-light, .8),
+  rgba($color-primary-dark, .8)),
+  url(../img/hero.jpg);
   background-size: cover;
   background-position: top;
+
   /* Remove part of the box. what we pass to polygon is what's drawn.
   Coordinates given are for top left, tr, br, bl corners of our shape.
   The grid is the element this is in (header here). x increases to right
   and y increases down, so 0 0 is top left corner of element*/
   clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
-  position: relative;
-  /* since we have a child positioned absolutely */ }
+  position: relative; /* since we have a child positioned absolutely */
+}
 
 .header__logo-box {
   position: absolute;
   top: 4rem;
-  left: 4rem; }
+  left: 4rem;
+}
 
 .header__logo {
-  height: 3.5rem; }
+  height: 3.5rem;
+}
 
 .header__text-box {
   /* center within header */
@@ -56,15 +72,18 @@ body {
   centered */
   transform: translate(-50%, -50%);
   /* center inline/inline-block child elements (which are treated as text) */
-  text-align: center; }
+  text-align: center;
+}
 
 .heading-primary {
-  color: #fff;
+  color: $color-white;
   text-transform: uppercase;
+
   /* fix the shaking up/down in animations.
   no one knows why shaking happens or why this fixes it */
   backface-visibility: hidden;
-  margin-bottom: 6rem; }
+  margin-bottom: 6rem;
+}
 
 .heading-primary--main {
   /* Spans are inline elements by default, but we want
@@ -74,49 +93,70 @@ body {
   font-size: 6rem;
   font-weight: 400;
   letter-spacing: 3.5rem;
+
   animation-name: moveInFromLeft;
   animation-duration: 1s;
   animation-timing-function: ease-out;
+
   /* other anim props we could use:
   animation-iteration-count: 3;
-  animation-delay: 3s; */ }
+  animation-delay: 3s; */
+}
 
 .heading-primary--sub {
   display: block;
   font-size: 2rem;
   font-weight: 700;
   letter-spacing: 1.75rem;
+
   /* shorthand for name, duration, timing */
-  animation: moveInFromRight 1s ease-out; }
+  animation: moveInFromRight 1s ease-out;
+}
 
 /* browsers are optimized to animate transform and opacity */
 @keyframes moveInFromLeft {
   0% {
     opacity: 0;
-    transform: translateX(-10rem); }
+    transform: translateX(-10rem);
+  }
+
   80% {
-    transform: translateX(1rem); }
+    transform: translateX(1rem);
+  }
+
   100% {
     opacity: 1;
-    transform: translate(0); } }
+    transform: translate(0);
+  }
+}
 
 @keyframes moveInFromRight {
   0% {
     opacity: 0;
-    transform: translateX(10rem); }
+    transform: translateX(10rem);
+  }
+
   80% {
-    transform: translateX(-1rem); }
+    transform: translateX(-1rem);
+  }
+
   100% {
     opacity: 1;
-    transform: translate(0); } }
+    transform: translate(0);
+  }
+}
 
 @keyframes moveInFromBottom {
   0% {
     opacity: 0;
-    transform: translateY(3rem); }
+    transform: translateY(3rem);
+  }
+
   100% {
     opacity: 1;
-    transform: translate(0); } }
+    transform: translate(0);
+  }
+}
 
 /* make button look same before and after it's clicked */
 .btn:link,
@@ -125,29 +165,36 @@ body {
   text-decoration: none;
   display: inline-block;
   border-radius: 10rem;
+
   /* needs to be on initial state, link, to animate.
   now property changes, like the ones below using transform,
   will happen smoothly vs. abruptly */
   transition: all .2s;
+
   position: relative;
-  font-size: 1.6rem; }
+  font-size: 1.6rem;
+}
 
 .btn:hover {
   /* translate arg is relative to btn link state */
-  transform: translateY(-0.3rem);
+  transform: translateY(-.3rem);
+
   /* x offset, y offset, blur, color. higher blur 
   makes shadowed element look farther away */
-  box-shadow: 0 0.1rem 0.2rem rgba(0, 0, 0, 0.2); }
+  box-shadow: 0 .1rem .2rem rgba(0, 0, 0, .2);
+}
 
 /* while btn is pressed down */
 .btn:active {
-  transform: translateY(-0.1rem);
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2); }
+  transform: translateY(-.1rem);
+  box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .2);
+}
 
 .btn--white {
-  background-color: #fff;
-  color: #777;
-  padding: 1.5rem 4rem; }
+  background-color: $color-white;
+  color: $color-grey-dark;
+  padding: 1.5rem 4rem;
+}
 
 .btn::after {
   /* pseudoelement must have content and display prop to appear
@@ -162,18 +209,22 @@ body {
   top: 0;
   left: 0;
   z-index: -1;
-  transition: all .4s; }
+  transition: all .4s;
+}
 
 .btn--white::after {
-  background-color: #fff; }
+  background-color: $color-white;
+}
 
 /* will apply the after we defined above on hover
   initial state for this is the 'after' pseudoelement */
 .btn:hover::after {
   transform: scaleX(1.4) scaleY(1.6);
-  opacity: 0; }
+  opacity: 0;
+}
 
 .btn--animated {
   animation: moveInFromBottom .5s ease-out .75s;
   /* fill-mode backwards applies styles of 0% keyframe before animation starts */
-  animation-fill-mode: backwards; }
+  animation-fill-mode: backwards;
+}

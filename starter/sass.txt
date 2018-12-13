@@ -1,0 +1,168 @@
+Sass is a CSS preprocessor, an extension of CSS that adds 
+power and elegance to the basic language.
+
+Sass source -> Sass compiler -> Compiled CSS
+
+Main Sass features:
+Variables for reusable values such as colors, font-sizes, spacing, etc
+Nesting to nest selectors inside of one another, allowing us to write less Compiled
+Operators for math operations right inside of CSS
+Partials and imports to write CSS in different files and import them all into a single one
+Mixins to write reusable pieces of CSS
+Functions -- similar to mixins, but produce a value that can be used
+Extends to make different selectors inherit declarations common to all of them
+Control directives for writing complex code using conditionals and loops
+(usually not needed in real-world projects)
+
+Two Sass syntaxes: Sass and SCSS
+
+Sass is identation sensitive and doesn't use braces or semicolons:
+.navigation
+  list-style: none
+  float: left
+
+  & li
+    display: inline-block
+    margin-left: 30px
+
+SCSS preserves way original CSS looks:
+.navigation {
+  list-style: none;
+  float: left;
+
+  & li {
+    display: inline-block;
+    margin-left: 30px;
+  }
+}
+
+Sass variables always start with a $, like
+$color-primary: #fff;
+
+Nesting allows you to do this:
+
+.navigation {
+  list-style: none;
+  
+  li {
+    display: inline-block;
+    margin-left: 30px;
+    
+    &:first-child {
+      margin: 0;
+    }
+  }
+}
+
+instead of having to write all selectors separately, like this:
+
+.navigation {
+  list-style: none;
+}
+
+.navigation li {
+  display: inline-block;
+  margin-left: 30px;
+}
+
+.navigation li:first-child {
+  margin 0;
+}
+
+The & copies the selectors used up to that point, so in the above,
+it stands for .navigation li
+
+if we didn't have the & there, it would be
+.navigation li :first-child
+and it wouldn't work anymore, because there can't be a space
+between the class and pseudo-class. the & gets rid of the space, so it reads
+.navigation li:first-child
+and works as expected.
+
+You can nest as much as you want, but in practice, you shouldn't go deeper than 3 levels.
+You can think of a mixin as a big variable holding multiple lines of code.
+Example of declaring a mixin:
+
+@mixin clearfix {
+    &::after {
+    // clearfix for ie gte8
+    content: "";
+    clear: both;
+    display: table;
+  }
+}
+
+Then to use the mixin, use @include:
+nav {
+  margin: 30px;
+  background-color: $color-primary;
+  
+  @include clearfix;
+}
+
+And the clearfix mixin can now be reused in whatever other selectors we want
+
+Mixins can also take parameters if we want to, say, reuse a mixin but need to use 
+different values for some property, like this:
+
+@mixin style-link-text($color) {
+  text-decoration: none;
+  text-transform: uppercase;
+  color: $color;
+}
+
+.btn-main:link,
+.btn-hot:link {
+  @include style-link-text($color-text-light);
+}
+
+a:link {
+  @include style-link-text($color-text-dark);
+}
+
+Where $color-text-light and $color-text-dark are variables we've declared elsewhere
+
+Although not as useful, Sass also allows you to define your own functions, in addition
+to using the ones provided by Sass like lighten() and darken():
+
+@function divide($a, $b) {
+  @return $a / $b;
+}
+
+nav {
+  margin: divide(60, 2) * 1px; // multiply by 1px to get the px unit attached
+}
+
+With Extends, we can write a placeholder with a bunch of styles,
+then have other selectors extend that placeholder
+
+an extend is defined with the % sign and used with the @extend syntax:
+%btn-placeholder {
+  padding: 10px;
+  display: inline-block;
+  text-align: center;
+  border-radius: 100px;
+  width: $width-button;
+  @include style-link-text($color-text-light);
+}
+
+.btn-main {
+  &:link {
+    @extend %btn-placeholder;
+    background-color: $color-secondary;
+  }
+}
+
+.btn-hot {
+  &:link {
+    @extend %btn-placeholder;
+    background-color: $color-tertiary;
+  }
+}
+
+This is different from using a mixin because the selectors, like
+.btn-main or .btn-hot, are copied into the %btn-placeholder, instead 
+of all the code going to .btn-main or .btn-hot if we used a mixin with @include instead
+
+Only use extend if the elements involved are thematically related, like 
+.btn-main and .btn-hot, both buttons
