@@ -1,0 +1,20 @@
+/* By default, browsers apply some margin
+or padding. We set these to 0 to ensure the
+same starting point for all browsers.
+This is called a global reset. */
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit; 
+}
+
+/* Set root font size to 10px so rem is just x10 */
+html {
+  font-size: 62.5%;
+}
+
+body {
+  box-sizing: border-box;
+}

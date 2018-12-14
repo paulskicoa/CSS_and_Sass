@@ -1,0 +1,72 @@
+.btn {
+  /* make button look same before and after it's clicked */
+    &:link,
+    &:visited {
+      text-transform: uppercase;
+      text-decoration: none;
+      display: inline-block;
+      border-radius: 10rem;
+  
+      /* needs to be on initial state, link, to animate.
+      now property changes, like the ones below using transform,
+      will happen smoothly vs. abruptly */
+      transition: all .2s;
+  
+      position: relative;
+      font-size: 1.6rem;
+    }
+  
+    &:hover {
+      /* translate arg is relative to btn link state */
+      transform: translateY(-.3rem);
+  
+      /* x offset, y offset, blur, color. higher blur 
+      makes shadowed element look farther away */
+      box-shadow: 0 .1rem .2rem rgba($color-black, .2);
+  
+      /* will apply the after we defined above on hover
+      initial state for this is the 'after' pseudoelement */
+      &::after {
+        transform: scaleX(1.4) scaleY(1.6);
+        opacity: 0;
+      }
+    }
+  
+    /* while btn is pressed down */
+    &:active {
+      transform: translateY(-.1rem);
+      box-shadow: 0 .5rem 1rem rgba($color-black, .2);
+    }
+  
+    &--white {
+      background-color: $color-white;
+      color: $color-grey-dark;
+      padding: 1.5rem 4rem;
+  
+      &::after {
+        background-color: $color-white;
+      }
+    }
+  
+    &::after {
+      /* pseudoelement must have content and display prop to appear
+      we copy and put it behind the actual btn. actual btn remains
+      on top always. */
+      content: "";
+      display: inline-block;
+      height: 100%;
+      width: 100%;
+      border-radius: 10rem;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      transition: all .4s;
+    }
+  
+    &--animated {
+      animation: moveInFromBottom .5s ease-out .75s;
+      /* fill-mode backwards applies styles of 0% keyframe before animation starts */
+      animation-fill-mode: backwards;
+    }
+  }

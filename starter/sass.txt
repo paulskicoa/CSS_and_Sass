@@ -166,3 +166,12 @@ of all the code going to .btn-main or .btn-hot if we used a mixin with @include 
 
 Only use extend if the elements involved are thematically related, like 
 .btn-main and .btn-hot, both buttons
+
+A partial sass file is used as an import to a main scss file
+and has a name that begins with an underscore,
+such as _base.scss
+
+You import a partial sass file using @import and the path, but
+without the _ or .scss extension.
+e.g. you would import a partial called _base.scss in the base folder in same dir like this:
+@import 'base/base';

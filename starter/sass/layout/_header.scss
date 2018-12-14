@@ -1,0 +1,41 @@
+.header {
+  height: 95vh;
+  /* First bg image goes on top of second */
+  background-image: linear-gradient(
+    to right bottom,
+  rgba($color-primary-light, .8),
+  rgba($color-primary-dark, .8)),
+  url(../img/hero.jpg);
+  background-size: cover;
+  background-position: top;
+
+  /* Remove part of the box. what we pass to polygon is what's drawn.
+  Coordinates given are for top left, tr, br, bl corners of our shape.
+  The grid is the element this is in (header here). x increases to right
+  and y increases down, so 0 0 is top left corner of element*/
+  clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+  position: relative; /* since we have a child positioned absolutely */
+
+  &__logo-box {
+    position: absolute;
+    top: 4rem;
+    left: 4rem;
+  }
+
+  &__logo {
+    height: 3.5rem;
+  }
+  
+  &__text-box {
+    /* center within header */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* shift the left and top by -50% relative to the
+    width of the text box itself. this will make it so the text box is
+    centered */
+    transform: translate(-50%, -50%);
+    /* center inline/inline-block child elements (which are treated as text) */
+    text-align: center;
+  }
+}
