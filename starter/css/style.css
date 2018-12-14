@@ -37,26 +37,23 @@ body {
   clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
   position: relative;
   /* since we have a child positioned absolutely */ }
-
-.header__logo-box {
-  position: absolute;
-  top: 4rem;
-  left: 4rem; }
-
-.header__logo {
-  height: 3.5rem; }
-
-.header__text-box {
-  /* center within header */
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  /* shift the left and top by -50% relative to the
-  width of the text box itself. this will make it so the text box is
-  centered */
-  transform: translate(-50%, -50%);
-  /* center inline/inline-block child elements (which are treated as text) */
-  text-align: center; }
+  .header__logo-box {
+    position: absolute;
+    top: 4rem;
+    left: 4rem; }
+  .header__logo {
+    height: 3.5rem; }
+  .header__text-box {
+    /* center within header */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* shift the left and top by -50% relative to the
+    width of the text box itself. this will make it so the text box is
+    centered */
+    transform: translate(-50%, -50%);
+    /* center inline/inline-block child elements (which are treated as text) */
+    text-align: center; }
 
 .heading-primary {
   color: #fff;
@@ -65,29 +62,27 @@ body {
   no one knows why shaking happens or why this fixes it */
   backface-visibility: hidden;
   margin-bottom: 6rem; }
-
-.heading-primary--main {
-  /* Spans are inline elements by default, but we want
-  our main and sub to be block so they get their own line
-  and take up full width available to them */
-  display: block;
-  font-size: 6rem;
-  font-weight: 400;
-  letter-spacing: 3.5rem;
-  animation-name: moveInFromLeft;
-  animation-duration: 1s;
-  animation-timing-function: ease-out;
-  /* other anim props we could use:
-  animation-iteration-count: 3;
-  animation-delay: 3s; */ }
-
-.heading-primary--sub {
-  display: block;
-  font-size: 2rem;
-  font-weight: 700;
-  letter-spacing: 1.75rem;
-  /* shorthand for name, duration, timing */
-  animation: moveInFromRight 1s ease-out; }
+  .heading-primary--main {
+    /* Spans are inline elements by default, but we want
+    our main and sub to be block so they get their own line
+    and take up full width available to them */
+    display: block;
+    font-size: 6rem;
+    font-weight: 400;
+    letter-spacing: 3.5rem;
+    animation-name: moveInFromLeft;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+    /* other anim props we could use:
+    animation-iteration-count: 3;
+    animation-delay: 3s; */ }
+  .heading-primary--sub {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 1.75rem;
+    /* shorthand for name, duration, timing */
+    animation: moveInFromRight 1s ease-out; }
 
 /* browsers are optimized to animate transform and opacity */
 @keyframes moveInFromLeft {
@@ -118,62 +113,55 @@ body {
     opacity: 1;
     transform: translate(0); } }
 
-/* make button look same before and after it's clicked */
-.btn:link,
-.btn:visited {
-  text-transform: uppercase;
-  text-decoration: none;
-  display: inline-block;
-  border-radius: 10rem;
-  /* needs to be on initial state, link, to animate.
-  now property changes, like the ones below using transform,
-  will happen smoothly vs. abruptly */
-  transition: all .2s;
-  position: relative;
-  font-size: 1.6rem; }
-
-.btn:hover {
-  /* translate arg is relative to btn link state */
-  transform: translateY(-0.3rem);
-  /* x offset, y offset, blur, color. higher blur 
-  makes shadowed element look farther away */
-  box-shadow: 0 0.1rem 0.2rem rgba(0, 0, 0, 0.2); }
-
-/* while btn is pressed down */
-.btn:active {
-  transform: translateY(-0.1rem);
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2); }
-
-.btn--white {
-  background-color: #fff;
-  color: #777;
-  padding: 1.5rem 4rem; }
-
-.btn::after {
-  /* pseudoelement must have content and display prop to appear
-  we copy and put it behind the actual btn. actual btn remains
-  on top always. */
-  content: "";
-  display: inline-block;
-  height: 100%;
-  width: 100%;
-  border-radius: 10rem;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  transition: all .4s; }
-
-.btn--white::after {
-  background-color: #fff; }
-
-/* will apply the after we defined above on hover
-  initial state for this is the 'after' pseudoelement */
-.btn:hover::after {
-  transform: scaleX(1.4) scaleY(1.6);
-  opacity: 0; }
-
-.btn--animated {
-  animation: moveInFromBottom .5s ease-out .75s;
-  /* fill-mode backwards applies styles of 0% keyframe before animation starts */
-  animation-fill-mode: backwards; }
+.btn {
+  /* make button look same before and after it's clicked */
+  /* while btn is pressed down */ }
+  .btn:link, .btn:visited {
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 10rem;
+    /* needs to be on initial state, link, to animate.
+    now property changes, like the ones below using transform,
+    will happen smoothly vs. abruptly */
+    transition: all .2s;
+    position: relative;
+    font-size: 1.6rem; }
+  .btn:hover {
+    /* translate arg is relative to btn link state */
+    transform: translateY(-0.3rem);
+    /* x offset, y offset, blur, color. higher blur 
+    makes shadowed element look farther away */
+    box-shadow: 0 0.1rem 0.2rem rgba(0, 0, 0, 0.2);
+    /* will apply the after we defined above on hover
+    initial state for this is the 'after' pseudoelement */ }
+    .btn:hover::after {
+      transform: scaleX(1.4) scaleY(1.6);
+      opacity: 0; }
+  .btn:active {
+    transform: translateY(-0.1rem);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2); }
+  .btn--white {
+    background-color: #fff;
+    color: #777;
+    padding: 1.5rem 4rem; }
+    .btn--white::after {
+      background-color: #fff; }
+  .btn::after {
+    /* pseudoelement must have content and display prop to appear
+    we copy and put it behind the actual btn. actual btn remains
+    on top always. */
+    content: "";
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    border-radius: 10rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: all .4s; }
+  .btn--animated {
+    animation: moveInFromBottom .5s ease-out .75s;
+    /* fill-mode backwards applies styles of 0% keyframe before animation starts */
+    animation-fill-mode: backwards; }
