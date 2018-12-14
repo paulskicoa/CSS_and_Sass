@@ -84,6 +84,28 @@ body {
     /* shorthand for name, duration, timing */
     animation: moveInFromRight 1s ease-out; }
 
+.heading-secondary {
+  font-size: 3.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  display: inline-block;
+  background-image: linear-gradient(to right, #7ed56f, #28b485);
+  /* clips the bg image to the text, so the gradient is only visible where text is,
+  but we then need to set the text transparent so the linear-gradient color takes effect */
+  -webkit-background-clip: text;
+  color: transparent;
+  letter-spacing: .2rem;
+  transition: all .2s; }
+  .heading-secondary:hover {
+    transform: skewY(2deg) skewX(15deg) scale(1.1);
+    text-shadow: 0.5rem 1rem 2rem rgba(0, 0, 0, 0.2); }
+
+.u-center-text {
+  text-align: center; }
+
+.u-margin-bottom-8 {
+  margin-bottom: 8rem; }
+
 .btn {
   /* make button look same before and after it's clicked */
   /* while btn is pressed down */ }
@@ -140,7 +162,6 @@ body {
 .row {
   /* 1140 px used as standard max grid width */
   max-width: 114rem;
-  background-color: #eee;
   /* center block el inside another block el */
   margin: 0 auto;
   /* select everything except last child */
@@ -152,7 +173,6 @@ body {
     display: table;
     clear: both; }
   .row [class^="col-"] {
-    background-color: orangered;
     float: left; }
     .row [class^="col-"]:not(:last-child) {
       margin-right: 6rem; }
@@ -202,3 +222,10 @@ body {
     transform: translate(-50%, -50%);
     /* center inline/inline-block child elements (which are treated as text) */
     text-align: center; }
+
+.section-about {
+  background-color: #f7f7f7;
+  padding: 25rem 0;
+  /* negative margin-top causes it to move up
+  and be overlapped by the header above */
+  margin-top: -20vh; }
