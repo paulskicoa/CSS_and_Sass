@@ -1,0 +1,45 @@
+.card {
+  /* perspective makes the cards seem to be coming toward user when flipped 
+  needs to be set on parent element of what we want to use it for */
+  perspective: 150rem;
+  -moz-perspective: 150rem;
+  position: relative;
+  /* seem height needed to fix collapsing height problem w/ abs positioning */
+  height: 50rem;
+
+  &__side {
+    color: #fff;
+    font-size: 2rem;
+    height: 50rem;
+    transition: all .8s ease;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* don't want to set front text on back side of card when it flips */
+    backface-visibility: hidden;
+    border-radius: 3px;
+    box-shadow: 0 1.5rem 4rem rgba($color-black, .15);
+
+    &--front {
+      background-color: $color-white;
+    }
+
+    &--back {
+      /* before hovering card, backside is already flipped */
+      transform: rotateY(180deg);
+
+      &-1 {
+        background-image: linear-gradient(to right bottom, $color-secondary-light, $color-secondary-dark);
+      }
+    }
+  }
+
+  &:hover &__side--front {
+    transform: rotateY(180deg);
+  }
+
+  &:hover &__side--back {
+    transform: rotateY(0);
+  }
+}
