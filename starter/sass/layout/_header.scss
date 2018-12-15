@@ -13,6 +13,7 @@
   Coordinates given are for top left, tr, br, bl corners of our shape.
   The grid is the element this is in (header here). x increases to right
   and y increases down, so 0 0 is top left corner of element*/
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
   clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
   position: relative; /* since we have a child positioned absolutely */
 
