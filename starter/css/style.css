@@ -128,6 +128,22 @@ body {
 .u-margin-top-huge {
   margin-top: 10rem; }
 
+.bg-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+  opacity: .15;
+  overflow: hidden; }
+  .bg-video__content {
+    height: 100%;
+    width: 100%;
+    /* video will fill entire parent while still maintaining aspect ratio.
+    whatever doesn't fit will be cropped */
+    object-fit: cover; }
+
 .btn {
   /* make button look same before and after it's clicked */
   /* while btn is pressed down */ }
@@ -360,6 +376,43 @@ body {
   .feature-box:hover {
     transform: translateY(-1.5rem) scale(1.03); }
 
+.form {
+  /* sibling we select with adjacent sib combinator has to come after the sibling */ }
+  .form__group:not(:last-child) {
+    margin-bottom: 2rem; }
+  .form__input {
+    font-size: 1.5rem;
+    /* input elements don't automatically inherit font, so we do it manually */
+    font-family: inherit;
+    color: inherit;
+    padding: 1.5rem 2rem;
+    border-radius: 2px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: none;
+    /* so input won't move around when changing focus... */
+    border-bottom: 3px solid transparent;
+    width: 90%;
+    display: block; }
+    .form__input:focus:invalid {
+      border-bottom: 3px solid #ff7730; }
+    .form__input:focus {
+      outline: none;
+      box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+      border-bottom: 3px solid #55c57a; }
+    .form__input::-webkit-input-placeholder {
+      color: #999; }
+  .form__label {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-left: 2rem;
+    margin-top: .7rem;
+    display: block;
+    transition: all .3s; }
+  .form__input:placeholder-shown + .form__label {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-4rem); }
+
 .story {
   width: 75%;
   /* block el inside block el -- can center like this */
@@ -410,22 +463,6 @@ body {
   .story:hover .story__img {
     transform: translateX(-4rem) scale(1);
     filter: blur(3px) brightness(80%); }
-
-.bg-video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  z-index: -1;
-  opacity: .15;
-  overflow: hidden; }
-  .bg-video__content {
-    height: 100%;
-    width: 100%;
-    /* video will fill entire parent while still maintaining aspect ratio.
-    whatever doesn't fit will be cropped */
-    object-fit: cover; }
 
 .row {
   /* 1140 px used as standard max grid width */
