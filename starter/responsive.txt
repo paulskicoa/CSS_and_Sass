@@ -1,0 +1,88 @@
+Responsive design strategies
+
+Desktop-first:
+Start writing CSS for the desktop: large screen
+Then, media queries shrink design to smaller screens
+
+Mobile-first:
+Start writing CSS for mobile devices: small screen
+Then, media queries expand design to a large desktop screen
+Forces us to reduce websites and apps to the absolute essentials
+
+Max-width (desktop first) and min-width (mobile first)
+max-width: 600px means is current viewport width <= 600 px?
+if it is, all the CSS in that media query applies
+max-width is maximum width at which media query still applies
+
+In the media queries, you just override some specific parts of global CSS,
+so you're not duplicating everything
+
+There may be another breakpoint at 900px, so a media query for 
+max-width: 900px.
+
+What if the viewport is 500px, so that either 600px or 900px breakpoints
+could apply? Both media queries would then apply.
+If there are conflicting CSS rules in these queries (usually the case),
+then the one that appears last wins.
+
+Media queries don't add any importance or specificity to selectors, so
+code order matters -- media queries at the end.
+
+There may be a final breakpoint at 1200px. Above that, we have the
+desktop version of the site, outside of any media queries.
+
+So for desktop-first, our initial code, *,  goes here along the px width spectrum:
+0---->600---->900---->1200--*-->inf
+
+With mobile-first, the situation is reversed, so it looks like this instead:
+0--*-->600---->900---->1200---->inf
+and we now use min-width media queries.
+
+Of course, min-width: 600px means is viewport width >= 600px?
+600px would then be the min width at which the media query applies.
+In mobile first, we want to use this min-width because the queries
+to stay away from our smallest screen styles. And as above,
+there may additional breakpoints for min-width 900px and 1200px
+
+Mobile first --
+Pros:
+100% optimized for the mobile experience
+Reduces websites and apps to the absolute essentials
+Results in smaller, faster, and more efficient products
+Priortizes content over aesthetic design, which may be desirable
+
+Cons:
+Desktop version might feel empty and simplistic
+More difficult and counterintuitive to develop
+Less creative freedom, making it more difficult to create distinctive products
+Clients are used to seeing a desktop version of the site as a prototype
+Do your users even use mobile? What's the purpose of the website?
+
+No matter what you do, always keep both in mind
+
+Setting our breakpoints -- the options
+Bad: (maybe most common) is only using width of popular (Apple) devices. only optimizing for one
+specific device. Not future proof - if Apple releases devices with new resolutions (higher PPI),
+would have to redo queries
+
+Good: Look at most used device widths on Internet. Group them together and pick
+breakpoints from that.
+
+Perfect: ignore device widths altogether and only look at content in your design.
+Ideally, you begin at one size and start increasing/decreasing screen width.
+With the design breaks, meaning it no longer works or looks ok, insert a 
+new breakpoint. Can be very difficult to do - not very popular. Hard to 
+find right breakpoints and not have a lot without a few predefined constraints.
+
+Usually need breakpoints for phones, portrait tablets, landscape tablets, and desktops.
+
+We want to use a unit like em/rem instead of px in media queries so that we can deal with the 
+case where a user changes the default font size, which won't affect px but would mess up the layout.
+Ems and rems in media queries and not affected by root font-size.
+1 em or 1 rem in media queries is always equal to font-size coming from browser,
+which is 16px by default. But if user changes it to 20px, it will be
+20px no matter what we have in our base font definition, such as 
+html {font-size: 62.5%;}
+
+We use ems instead of rems because the latter fail to work as intended
+in some browsers.

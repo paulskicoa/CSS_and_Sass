@@ -1,3 +1,15 @@
+/* Media query manager
+0 - 600px: phone
+600 - 900px: tablet portrait
+900 - 1200px: tablet landscape
+1200 - 1800px: our normal styles
+1800px+: big desktop
+
+1 em = 16 px @ default font-size
+
+$breakpoint arg choices:
+phone, tab-port, tab-land, big
+*/
 /* browsers are optimized to animate transform and opacity */
 @keyframes moveInFromLeft {
   0% {
@@ -40,7 +52,22 @@ This is called a global reset. */
 
 /* Set root font size to 10px so rem is just x10 */
 html {
-  font-size: 62.5%; }
+  font-size: 62.5%;
+  /* order media queries from largest to smallest with desktop-first
+  approach, because later overrides earlier and if we have a device
+  with width e.g. 800px, we want the <= 900px to apply and not the <= 1200px,
+  which is really meant for devices whose with is between 900 and 1200px. */
+  /* this one could also go after all others, because there's no way for device
+  with to be >= 1800px and have one of the other conditions here be true as well */ }
+  @media (min-width: 112.5em) {
+    html {
+      font-size: 75%; } }
+  @media (max-width: 75em) {
+    html {
+      font-size: 56.25%; } }
+  @media (max-width: 56.25em) {
+    html {
+      font-size: 50%; } }
 
 body {
   box-sizing: border-box; }

@@ -13,6 +13,25 @@ This is called a global reset. */
 /* Set root font size to 10px so rem is just x10 */
 html {
   font-size: 62.5%;
+
+  /* order media queries from largest to smallest with desktop-first
+  approach, because later overrides earlier and if we have a device
+  with width e.g. 800px, we want the <= 900px to apply and not the <= 1200px,
+  which is really meant for devices whose with is between 900 and 1200px. */
+
+  /* this one could also go after all others, because there's no way for device
+  with to be >= 1800px and have one of the other conditions here be true as well */
+  @include respond(big) { // width >= 1800px @16px default font-size
+    font-size: 75%; // 1 rem = 12px, 12/16 = 75%
+  }
+
+  @include respond(tab-land) { // width <= 1200px
+    font-size: 56.25%; // 1 rem = 9px, 9/16 = 56.25%
+  }
+
+  @include respond(tab-port) { // width <= 900px
+    font-size: 50%; // 1 rem = 8px, 8/16 = 50%
+  }
 }
 
 body {
