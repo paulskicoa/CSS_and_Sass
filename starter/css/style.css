@@ -809,7 +809,7 @@ body {
 .header {
   height: 95vh;
   /* First bg image goes on top of second */
-  background-image: linear-gradient(to right bottom, rgba(126, 213, 111, 0.8), rgba(40, 180, 133, 0.8)), url(../img/hero.jpg);
+  background-image: linear-gradient(to right bottom, rgba(126, 213, 111, 0.8), rgba(40, 180, 133, 0.8)), url(../img/hero-small.jpg);
   background-size: cover;
   background-position: top;
   /* Remove part of the box. what we pass to polygon is what's drawn.
@@ -820,7 +820,14 @@ body {
   clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
   position: relative;
   /* since we have a child positioned absolutely */
+  /* if screen is below 600px wide or low dpi, doesn't make sense to display hi-res version
+  a comma in the media query means 'or', so it'll display the hi-res version if dpi >= 192 AND width >= 600,
+  OR if width >= 2000 (regardless of dpi for that one)
+  */
   /* content directive allows us to pass block of code into mixin */ }
+  @media (min-resolution: 192dpi) and (min-width: 37.5em), (min-width: 125em) {
+    .header {
+      background-image: linear-gradient(to right bottom, rgba(255, 185, 0, 0.8), rgba(255, 119, 48, 0.8)), url(../img/hero.jpg); } }
   @media (max-width: 37.5em) {
     .header {
       -webkit-clip-path: polygon(0 0, 100% 0, 100% 85vh, 0 100%);
