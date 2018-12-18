@@ -15,6 +15,7 @@
     left: 0;
     width: 100%;
     /* don't want to set front text on back side of card when it flips */
+    -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     border-radius: 3px;
     /* image overflows parent in top left and right corners, so this will hide that */

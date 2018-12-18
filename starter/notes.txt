@@ -428,3 +428,14 @@ abstracts/ -- doesn't output any CSS -- variables or mixins
 vendors/ -- all 3rd party CSS
 
 Don't always need to use all of them.
+
+Graceful degradation: start with modern features meant to work 
+with latest browsers, then strip features away to provide a reduced version if not supported by
+environment (browser a user is using)
+
+You can test if the environment supports a property using @supports
+and then do something if it does. Example:
+
+  @supports(-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px)) {
+    
+  }

@@ -296,6 +296,7 @@ body {
     left: 0;
     width: 100%;
     /* don't want to set front text on back side of card when it flips */
+    -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     border-radius: 3px;
     /* image overflows parent in top left and right corners, so this will hide that */
@@ -578,7 +579,14 @@ body {
   opacity: 0;
   visibility: hidden;
   transition: all .3s;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   /* becomes active when link with href=#popup is clicked */ }
+  @supports (-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px)) {
+    .popup {
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      background-color: rgba(0, 0, 0, 0.3); } }
   .popup:target {
     opacity: 1;
     visibility: visible; }
@@ -663,15 +671,20 @@ body {
     width: 15rem;
     height: 15rem;
     float: left;
-    /* radius at position. only works if el is floated and has defined dimensions */
-    -webkit-shape-outside: circle(50% at 50% 50%);
-    shape-outside: circle(50% at 50% 50%);
-    -webkit-clip-path: circle(50% at 50% 50%);
-    clip-path: circle(50% at 50% 50%);
     /* best way to move floated el is translate */
     transform: translateX(-3rem) skewX(12deg);
     position: relative;
+    overflow: hidden;
+    border-radius: 50%;
     /* content directive allows us to pass block of code into mixin */ }
+    @supports (clip-path: polygon(0 0)) or (-webkit-clip-path: polygon(0 0)) {
+      .story__shape {
+        -webkit-clip-path: circle(50% at 50% 50%);
+        clip-path: circle(50% at 50% 50%);
+        /* radius at position. only works if el is floated and has defined dimensions */
+        -webkit-shape-outside: circle(50% at 50% 50%);
+        shape-outside: circle(50% at 50% 50%);
+        border-radius: none; } }
     @media (max-width: 37.5em) {
       .story__shape {
         transform: translateX(-3rem) skewX(0); } }
@@ -807,7 +820,7 @@ body {
     width: calc(3/4 * (100% - 3 * 6rem) + 2 * 6rem); }
 
 .header {
-  height: 95vh;
+  height: 85vh;
   /* First bg image goes on top of second */
   background-image: linear-gradient(to right bottom, rgba(126, 213, 111, 0.8), rgba(40, 180, 133, 0.8)), url(../img/hero-small.jpg);
   background-size: cover;
@@ -823,11 +836,17 @@ body {
   /* if screen is below 600px wide or low dpi, doesn't make sense to display hi-res version
   a comma in the media query means 'or', so it'll display the hi-res version if dpi >= 192 AND width >= 600,
   OR if width >= 2000 (regardless of dpi for that one)
+  Safari doesn't support min-resolution, so we use the -webkit-... instead
   */
   /* content directive allows us to pass block of code into mixin */ }
-  @media (min-resolution: 192dpi) and (min-width: 37.5em), (min-width: 125em) {
+  @supports (clip-path: polygon(0 0)) or (-webkit-clip-path: polygon(0 0)) {
     .header {
-      background-image: linear-gradient(to right bottom, rgba(255, 185, 0, 0.8), rgba(255, 119, 48, 0.8)), url(../img/hero.jpg); } }
+      -webkit-clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+      clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+      height: 95vh; } }
+  @media (min-resolution: 192dpi) and (min-width: 37.5em), (-webkit-min-device-pixel-ratio: 2) and (min-width: 37.5em), (min-width: 125em) {
+    .header {
+      background-image: linear-gradient(to right bottom, rgba(126, 213, 111, 0.8), rgba(40, 180, 133, 0.8)), url(../img/hero.jpg); } }
   @media (max-width: 37.5em) {
     .header {
       -webkit-clip-path: polygon(0 0, 100% 0, 100% 85vh, 0 100%);
