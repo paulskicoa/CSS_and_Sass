@@ -5,7 +5,6 @@ body {
   font-weight: 400; /* normal */
   line-height: 1.7;
   color: $color-grey-dark;
-  padding: 3rem;
 }
 
 .heading-primary {
@@ -33,6 +32,11 @@ body {
     /* other anim props we could use:
     animation-iteration-count: 3;
     animation-delay: 3s; */
+
+    @include respond(phone) {
+      letter-spacing: 1rem;
+      font-size: 5rem;
+    }
   }
   
   &--sub {
@@ -43,6 +47,10 @@ body {
   
     /* shorthand for name, duration, timing */
     animation: moveInFromRight 1s ease-out;
+
+    @include respond(phone) {
+      letter-spacing: .5rem;
+    }
   }
 }
 
@@ -58,6 +66,14 @@ body {
   color: transparent;
   letter-spacing: .2rem; // small px values instead of rem are ok too
   transition: all .2s;
+
+  @include respond(tab-port) {
+    font-size: 3rem;
+  }
+
+  @include respond(phone) {
+    font-size: 2.5rem;
+  }
 
   &:hover {
     transform: skewY(2deg) skewX(15deg) scale(1.1);
